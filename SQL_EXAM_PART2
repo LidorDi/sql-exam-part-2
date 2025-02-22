@@ -1,0 +1,149 @@
+2א.
+
+SELECT year , SUM(revenue) FROM movies
+GROUP BY year
+
+ב.
+
+SELECT COUNT(id) AS "NUMBER OF MOVIES" , language FROM movies
+GROUP BY language
+
+ג.
+
+SELECT genre ,AVG(revenue) AS revenue FROM movies
+GROUP BY genre
+
+ד.
+
+SELECT  language ,genre ,AVG(revenue) AS revenue FROM movies
+GROUP BY language, genre
+
+ה.
+
+SELECT count(language),language FROM movies
+Group by language
+HAVING COUNT(language) > 2
+
+ו.
+
+SELECT count(language),language FROM movies
+Group by language
+HAVING COUNT(language) > 2
+ORDER BY count(language) DESC
+LIMIT 1
+
+ז.
+
+SELECT genre , count(genre) FROM movies
+GROUP BY genre
+
+ח.
+
+SELECT language, genre , AVG(revenue) FROM movies
+GROUP BY language , genre
+
+ט.
+
+SELECT year , sum(revenue) FROM movies
+GROUP BY year
+HAVING sum(revenue) > 1000
+
+י.
+
+SELECT language, count(language) FROM movies
+GROUP BY language
+ORDER BY count(language) ASC
+LIMIT 1 WITH TIES
+
+יא.
+
+SELECT genre , count(genre) FROM movies
+GROUP BY genre
+HAVING count(genre) >2
+
+
+3א.
+
+SELECT tourists.first_name, tourists.last_name, tours.tour_name FROM tourists
+CROSS JOIN tours
+
+ב.
+
+SELECT first_name, last_name FROM tourists
+WHERE tour_id IS NULL
+
+------
+
+DELETE FROM tourists
+WHERE tour_id IS NULL
+
+ג.
+
+לא הצלחתי
+
+ד.
+
+SELECT COUNT(*) AS empty FROM tours
+LEFT JOIN tourists ON tourists.tour_id = tours.id
+WHERE tourists.id IS NULL
+
+ה.
+
+SELECT * FROM tourists
+LEFT JOIN tours ON tourists.tour_id = tours.id
+
+ו.
+
+SELECT  tourists.first_name,  tourists.last_name ,countries.country_name FROM tourists
+INNER JOIN countries ON tourists.country_id = countries.id
+
+ז.
+
+SELECT tourists.first_name, tourists.last_name, tours.tour_name ,tours.start_date ,tours.end_date ,tours.price FROM tourists
+INNER JOIN tours ON tourists.tour_id = tours.id
+WHERE tourists.tour_id IS NOT NULL
+
+ח.
+
+SELECT tours.tour_name, tourists.first_name, tourists.last_name FROM tours
+LEFT JOIN tourists ON tourists.tour_id = tours.id
+
+4א.
+
+import sqlite3
+
+conn = sqlite3.connect('dsfff.db')
+cursor = conn.cursor()
+
+cursor.execute("SELECT * FROM movies")
+allmovies = cursor.fetchall()
+
+for movie in allmovies:
+    print(f"ID: {movie[0]}, Movie Name: {movie[1]}, Genre: {movie[2]}, Country: {movie[3]}, Language: {movie[4]}, Year: {movie[5]}, Revenue: {movie[6]}")
+
+conn.close()
+
+ב. לא הבנתי
+
+ג.
+
+import sqlite3
+
+conn = sqlite3.connect('dsfff.db')
+cursor = conn.cursor()
+
+movie_name = input("Enter movie name: ")
+genre = input("Enter genre: ")
+country = input("Enter country: ")
+language = input("Enter language: ")
+year = int(input("Enter year: "))
+revenue = float(input("Enter revenue (in millions): "))
+
+cursor.execute("INSERT INTO movies (movie_name, genre, country, language, year, revenue) VALUES (?, ?, ?, ?, ?, ?)", (movie_name, genre, country, language, year, revenue))
+conn.commit()
+print("Movie added successfully!")
+conn.close()
+
+
+
+
